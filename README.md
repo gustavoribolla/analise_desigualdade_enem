@@ -1,1 +1,122 @@
-# aps1_cdados
+# APS 01 - Dados do ENEM
+
+[Link para os dados do ENEM](https://www.gov.br/inep/pt-br/assuntos/noticias/enem/divulgados-microdados-do-enem-2022)
+
+O ENEM (Exame Nacional do Ensino Médio) tem um papel importante na educação brasileira. Os resultados do ENEM permitem avaliar o desempenho de alunos em diferentes escolas, ao passo que o desempenho dos alunos é usado como parte (integral ou parcial) do processo seletivo para ingresso em diversas universidades. Por se tratar de um exame padronizado, ele pode também evidenciar como componentes demográficos ou comportamentais influenciam nos resultados.
+
+Neste roteiro, usaremos os *microdados* do ENEM 2022. Os microdados são os dados mais brutos que podemos encontrar - na verdade, tratam-se das notas de *cada* participante do ENEM individualmente. Nesta atividade, vamos responder às seguintes perguntas:
+
+1. Será que a renda familiar de um candidato tem um grande impacto em sua nota?
+1. Será que há outros fatores, como gênero, etnia ou idade, que também impactam a nota dos candidatos?
+
+## Parte 1 - Baixar e tratar os dados
+
+1. Inicialmente, [baixe os microdados no site do INEP](https://www.gov.br/inep/pt-br/assuntos/noticias/enem/divulgados-microdados-do-enem-2022).
+1. Verifique que há um dicionário de microdados que explica o significado de cada coluna do dataframe!
+1. [Abra os microdados](https://youtu.be/nxSQwTYYwOQ) em um dataframe. Se preciso, faça ajustes na instrução de leitura para evitar as inconsistências nos dados.
+1. Limpe os dados usando [filtros](https://youtu.be/maFB5tSKpV8), removendo treineiros, alunos que não foram fazer alguma das prova, alunos que não tiveram a redação corrigida e outros casos que julgar relevante.
+
+## Parte 2 - A desigualdade de renda
+
+### (a) A média das notas
+
+Já sabemos calcular a média como em:
+
+$$
+\mu = \frac{\sum_{n=1}^{N} x_n}{N}\\
+$$
+
+Gostaríamos de saber como o desempenho dos alunos tipicamente muda para cada faixa de renda. Para isso, faça um gráfico em que:
+
+1. O eixo X representa cada faixa de renda (dica: veja a questão `Q006` no questionário sócio-econômico!)
+1. O eixo Y representa as notas de cada uma das provas
+1. Decida se este deve ser um gráfico de linhas ou um gráfico de barras!
+
+
+### (b) O desvio padrão das notas
+
+Você provavelmente visualizou diferenças entre as médias de desempenhos de alunos de diferentes faixas de renda. Porém, podemos nos perguntar: será que essas diferenças observadas estão dentro das diferenças esperadas para grupos diferentes? Para isso, vamos usar o desvio padrão, como em:
+
+$$
+\sigma = \sqrt{\frac{\sum_{n=1}^{N} (x_n-\mu)^2}{N}}
+$$
+
+Gostaríamos de avaliar as diferenças entre as médias dos grupos em comparação ao desvio padrão esperado. Para tal, usaremos o coeficiente *d de Cohen* ([Cohen's d](https://en.wikipedia.org/wiki/Effect_size#Cohen's_d)). Ele é calculado para cada grupo *g* como:
+
+$$
+d_g = \frac{\mu_g - \mu}{\sigma},
+$$
+
+onde:
+
+* $d_g$ é o coeficiente $d$ para o grupo $g$,
+* $\mu_g$ é a média do grupo $g$ (no nosso caso, é a nota média para cada faixa de renda)
+* $\mu$ é a média agregada, isto é, a média de notas de todos os participantes do ENEM, e
+* $\sigma$ é o desvio padrão agregado, isto é, o desvio padrão das notas de todos os participantes do ENEM.
+
+Faça novamente o gráfico do ítem (a), mas substituindo as notas médias de cada faixa de renda $g$ pelo coeficiente $d_g$ correspondente.
+
+Analisando esse novo gráfico, você diria que a renda familiar de um candidato influencia seu desempenho no ENEM? De que forma?
+
+## Parte 3 - Outras diferenças
+
+Existem estudos mostrando que há outros fatores, como gênero, etnia ou forma de estudar, que parecem estar ligados ao desempenho de candidatos no ENEM. Neste exercício, escolha o aspecto demográfico ou comportamental que você deseja analisar (gênero, raça, se estudou em escola pública ou particular, o método preferido de estudo, ou o que preferir). Defina dois grupos para o aspecto que você escolheu, e filtre seus dados para que só contenha elementos desses grupos.
+
+Por exemplo: se eu escolhi analisar a relação entre a nota e o estado (geográfico) em que a pessoa fez a prova, posso escolher dois estados (contrastando, por exemplo, Rio Grande do Sul a Rio Grande do Norte), ou então duas regiões (contrastando, por exemplo, a região Sudeste à região Centro-Oeste), ou talvez os estados com maior PIB contra os estados de menor PIB, e assim por diante. Essa escolha se chama "definir um recorte", e é ela que guia a perspectiva que seus dados terão no futuro.
+
+Agora, vamos realizar uma análise do coeficiente *d de Cohen* para os grupos que definimos. Para isso:
+
+1. Escolha um dos grupos para ser a sua referência.
+1. Para cada faixa de renda, calcule o coeficiente *d de Cohen* para as notas desse grupo.
+1. Veja que valores positivos de *d* significam que o grupo escolhido tem desempenho melhor que o outro grupo, ao passo que valores negativos significam que o grupo tem desempenho pior que o outro grupo. Veja que só é preciso calcular o coeficiente *d* para um dos grupos, já que o resultado negativo já indica que o grupo escolhido tem desempenho pior.
+
+**É *muito importante* realizar essa análise para cada faixa de renda isoladamente. Ao fazer isso, excluímos o efeito da renda na análise. O nome desse procedimento é "controlar para a (no caso) renda".**
+
+Faça uma figura que mostre as diferenças de notas entre os grupos que você escolheu.
+
+## Parte 4 - Pesquisa
+
+De forma geral, conhecimentos novos levam anos para serem criados. Em análises mais curtas (que levam somente algumas semanas), o objetivo costuma ser traçar planos de ação. Por isso, é importante, além de analisar os dados que temos, verificar se nossas conclusões condizem com a pesquisa científica vigente (quando isso for possível). Faça uma busca no [Google Scholar](https://scholar.google.com/) e encontre algum artigo que também analise ao aspecto que você usou na parte 3. Se não achar nenhum artigo, encontre outro com algum aspecto semelhante. À luz desse artigo, escreva um pequeno texto (com até 500 palavras) que explique:
+
+1. O que é o aspecto que você analisou na parte 3,
+1. Ao longo das diferentes faixas de renda, como esse aspecto está ligado às diferenças de notas (aumenta? diminui? é constante? não impacta?)?
+1. Os dados que você levantou correspondem ao que foi argumentado no artigo escolhido?
+
+Seu texto deve **indicar claramente quais ideias vieram do artigo citado e quais ideias são originais suas**. Para isso, use o formato de citação (pode usar o padrão que preferir). Uma estratégia para isso é ser claro com o sujeito das frase: você **pode** escrever na primeira pessoa ("fiz a análise a, b, c..."), mas você **não deve** escrever usando sujeito indeterminado ("fez-se a análise a, b, c...").
+
+# Entregas esperadas
+
+Você deve entregar, via Blackboard, um arquivo PDF (uma entrega por grupo!) contendo:
+
+1. Nome do grupo
+1. Título do trabalho, que deve ser algo como "Análise da desigualdade de gênero no desempenho do ENEM" (trocando desigualdade de gênero pelo aspecto que você escolheu)
+1. A figura gerada na parte 2b,
+1. A figura gerada na parte 3,
+1. O texto gerado na parte 4.
+1. Uma auto-avaliação das figuras e do texto, justificando as notas que foram auto-atribuídas.
+
+# Rubricas e avaliação
+
+Cada um dos ítens (exceto a auto-avaliação) será avaliado da seguinte forma:
+
+| Rubrica | Descrição | Exemplo |
+| --- | --- | --- | 
+| F | Não entregue, entregue fora do prazo, entregue fora do escopo ("fiz outra coisa") | Não entregar |
+| E | Entregue no prazo e dentro do escopo, mas a entrega tem um ou mais ítens faltando ou só é compreensível se for acompanhado deste enunciado (por exemplo, ao dizer "resposta ao ítem 2" ao invés de ter um título explicativo) ou está ilegível (exemplo: textos sem sentido ou figuras muito grandes / muito pequenas ou em resolução baixa) | Colocar no título de uma figura: "ítem 1a"
+| D | A entrega tem falhas graves de coesão ou coerência que impedem sua compreensão, ou faltam elementos essenciais (título, legenda, rótulos nos eixos), ou o texto deixa de indicar o que são ideias originais e o que são ideias retiradas de outras fontes, ou as ideias/dados são mostrados de forma embaralhada, sem guiar o leitor a um fluxo de pensamento. | Em um texto: "Existe impacto da renda na educação. Isso porque a renda pode estar ligada a condições de estudo. O estudo é essencial para formar seres humanos"
+| C | A entrega não tem falhas graves. Todas as fontes de ideias são indicadas. A entrega traz ao menos um elemento errado ou ao menos um elemento supérfluo (que não contribui para a mensagem passada). | Em um texto: "Essa é uma fonte de 100W (Watts, unidade batizada em homenagem a James Watt, inventor da máquina a vapor")
+| B | A entrega tem todos os elementos necessários para passar a mensagem, a mensagem é clara, e não há elementos supérfluos. | Título da figura: "Média de desempenho no ENEM 2022 por disciplina por faixa de renda", com rótulo no eixo Y: "Pontos" e rótulo no eixo X: "faixa de renda".
+| A | A entrega está correta e o conteúdo mostra ou induz uma análise crítica do contexto ou das implicações dos dados e informações coletadas. | Título da figura: "Desempenho no ENEM diminui com o aumento da renda", com rótulo no eixo Y: "Pontos" e rótulo no eixo X: "faixa de renda".
+
+A auto-avaliação será avaliada da seguinte forma:
+
+| Rubrica | Descrição | Exemplo |
+| --- | --- | --- | 
+| F | Não entregue, entregue fora do prazo, entregue fora do escopo ("fiz outra coisa") | Não entregar |
+| D | Entregue no prazo e dentro do escopo, mas somente copia as rubricas que foram apresentadas, sem relacioná-las com o material apresentado, ou apresenta notas sem argumentar o motivo delas. | "Nota A, pois está correto e o conteúdo induz análise crítica do contexto"
+| C | Entregue, mas claramente puxa as notas "para cima" ou "para baixo" sem ter argumentos | Entrega é uma figura sem título, mas auto-avaliação diz: "o título da figura está correto"
+| A | Entregue, e argumentado corretamente  | "Nota A porque a passagem `de acordo com Fulano et al.` mostra que os resultados obtidos condizem com a literatura", ou "Nota B, porque a figura tem todos os elementos, embora não tenha nenhuma indicação de uma leitura crítica do contexto.
+
+
+Para atingir cada nível, é necessário cumprir todos os requisitos do nível anterior. Cada uma das entregas será avaliada individualmente e isoladamente. A nota geral do trabalho será a menor entre as notas das entregas.
+
