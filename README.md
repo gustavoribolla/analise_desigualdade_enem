@@ -119,4 +119,3 @@ A auto-avaliação será avaliada da seguinte forma:
 
 
 Para atingir cada nível, é necessário cumprir todos os requisitos do nível anterior. Cada uma das entregas será avaliada individualmente e isoladamente. A nota geral do trabalho será a menor entre as notas das entregas.
-
